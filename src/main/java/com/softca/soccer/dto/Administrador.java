@@ -2,7 +2,7 @@ package com.softca.soccer.dto;
 
 public class Administrador {
 
-    private int cedula;
+    private String cedula;
     private String nombres;
     private String apellidos;
     private String email;
@@ -11,7 +11,7 @@ public class Administrador {
     private String id;
 
     public Administrador() {
-        cedula = 0;
+        cedula = "";
         nombres = "";
         apellidos = "";
         email = "";
@@ -24,7 +24,7 @@ public class Administrador {
         this.nombres = nombres;
     }
 
-    public void setCedula(int cedula) {
+    public void setCedula(String cedula) {
         this.cedula = cedula;
     }
 
@@ -44,16 +44,17 @@ public class Administrador {
         this.contra = contra;
     }
 
-    public int getCedula() {
+    public void setId(String id) {
+        this.id = id;
+    }
+
+
+    public String getCedula() {
         return cedula;
     }
 
     public String getId() {
         return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getNombres() {

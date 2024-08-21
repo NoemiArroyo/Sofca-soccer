@@ -11,7 +11,7 @@ public class AdministradorMapper implements RowMapper<Administrador> {
     public Administrador mapRow(ResultSet resultSet, int i) throws SQLException {
         Administrador administrador = new Administrador();
 
-        administrador.setCedula(resultSet.getInt("ds_cc"));
+        administrador.setCedula(resultSet.getString("ds_cc"));
         administrador.setNombres(resultSet.getString("ds_nombres"));
         administrador.setApellidos(resultSet.getString("ds_apellidos"));
         administrador.setEmail(resultSet.getString("ds_email"));

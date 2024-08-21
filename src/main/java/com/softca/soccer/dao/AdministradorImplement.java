@@ -49,7 +49,7 @@ public class AdministradorImplement implements AdministradorDao {
 
     public Administrador selectById( Administrador administrador){
         try{
-            String QUERY = "SELECT ds_cc, ds_nombres, ds_apellidos, ds_email, nu_nit_admin, ds_contraseñaFROM Administrador WHERE id=?";
+            String QUERY = "SELECT ds_cc, ds_nombres, ds_apellidos, ds_email, nu_nit_admin, ds_contraseña FROM Administrador WHERE id=?";
 
             return jdbcTemplate.queryForObject(QUERY, new AdministradorMapper(), administrador.getId());
         } catch(EmptyResultDataAccessException ex){
