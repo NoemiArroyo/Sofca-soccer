@@ -10,3 +10,4 @@ public interface BusinessAdministrador {
     public Administrador selectById(Administrador administrador ) throws Exception;
     public List<Administrador> selectAll() throws Exception;
 }
+
