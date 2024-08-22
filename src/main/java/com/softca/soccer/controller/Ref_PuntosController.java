@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @Slf4j
-@RequestMapping("/puntosRef /")
+@RequestMapping("/puntosRef/")
 
 public class Ref_PuntosController {
 

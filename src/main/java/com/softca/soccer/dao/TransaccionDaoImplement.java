@@ -21,17 +21,29 @@ public class TransaccionDaoImplement implements TransaccionDao{
     }
 
     public void insert(Transacciones transaccion) {
-        String INSERT ="INSERT INTO transaccion( fe_compra," +
-                                                " nu_factura," +
-                                                " va_montoc," +
-                                                " bo_estado," +
-                                                " id_tienda," +
-                                                " ds_cc_comprador," +
-                                                " ds_tipo_compra," +
-                                                " id) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+        String INSERT ="INSERT INTO transaccion (\n" +
+                "    fe_compra, \n" +
+                "    nu_factura, \n" +
+                "    va_montoc, \n" +
+                "    bo_estado, \n" +
+                "    id_tienda, \n" +
+                "    ds_cc_comprador, \n" +
+                "    ds_tipo_compra, \n" +
+                "    id\n" +
+                ") \n" +
+                "VALUES (\n" +
+                "    ?, \n" +
+                "    ?, \n" +
+                "    ?, \n" +
+                "    ?, \n" +
+                "    ?, \n" +
+                "    ?, \n" +
+                "    ?, \n" +
+                "    uuid_generate_v4()\n" +
+                ");\n";
 
-        String uuid = UUID.randomUUID().toString();
-        transaccion.setId(uuid);
+
+
         jdbcTemplate.update(INSERT,
                 transaccion.getFecha(),
                 transaccion.getNumero(),
@@ -39,8 +51,7 @@ public class TransaccionDaoImplement implements TransaccionDao{
                 transaccion.getEstado(),
                 transaccion.getidTnd().getId(),
                 transaccion.getcc_comprador(),
-                transaccion.getTipo_compra(),
-                transaccion.getId());
+                transaccion.getTipo_compra());
     }
 
     public void update(Transacciones transaccion) {
@@ -58,20 +69,7 @@ public class TransaccionDaoImplement implements TransaccionDao{
     public Transacciones selectById( Transacciones transaccion){
 
         try {
-            String QUERY = "SELECT A.fe_compra,\n" +
-                    "\t\tA.nu_factura,\n" +
-                    "\t\tA.va_montoc,\n" +
-                    "\t\tA.bo_estado,\n" +
-                    "\t\tA.id_tienda,\n" +
-                    "\t\tB.nu_nit_tienda,\n" +
-                    "\t\tB.ds_tipo_tienda,\n" +
-                    "\t\tA.ds_cc_comprador,\n" +
-                    "\t\tA.ds_tipo_compra,\n" +
-                    "\t\tA.id\n" +
-                    " FROM transaccion A\n" +
-                    "     INNER JOIN\n" +
-                    "\t tienda B ON A.id_tienda=B.id" +
-                    " WHERE  id=? ";
+            String QUERY = "SELECT A.fe_compra, A.nu_factura, A.va_montoc, A.bo_estado, A.id_tienda, B.nu_nit_tienda, B.ds_tipo_tienda, A.ds_cc_comprador, A.ds_tipo_compra, A.id FROM transaccion A INNER JOIN tienda B ON A.id_tienda = B.id WHERE A.id = ?";
             return jdbcTemplate.queryForObject(QUERY, new TransaccionesMapper(),transaccion.getId());
 
         }catch (EmptyResultDataAccessException ex){

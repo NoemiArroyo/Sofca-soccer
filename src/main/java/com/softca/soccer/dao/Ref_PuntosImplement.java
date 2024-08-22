@@ -21,7 +21,7 @@ public class Ref_PuntosImplement implements Ref_PuntosDao {
 
 
     public void insert( Ref_Puntos refPuntos) {
-        String INSERT ="INSERT INTO public.ref_puntos(id, va_montoref, nu_puntosref) VALUES (?, ?, ?)";
+        String INSERT ="INSERT INTO ref_puntos(id, va_montoref, nu_puntosref) VALUES (?, ?, ?)";
 
         String uuid = UUID.randomUUID().toString();
         refPuntos.setId(uuid);
@@ -49,7 +49,7 @@ public class Ref_PuntosImplement implements Ref_PuntosDao {
 
     public Ref_Puntos selectById (Ref_Puntos refPuntos){
         try{
-            String QUERY = "SELECT nva_montoref, nu_puntosref FROM ref_puntos WHERE id=?";
+            String QUERY = "SELECT va_montoref, nu_puntosref FROM ref_puntos WHERE id=?";
 
             return jdbcTemplate.queryForObject(QUERY, new Ref_PuntosMapper(),refPuntos.getId());
         } catch(EmptyResultDataAccessException ex){

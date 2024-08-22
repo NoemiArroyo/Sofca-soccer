@@ -11,7 +11,7 @@ public class Ref_PuntosMapper implements RowMapper<Ref_Puntos> {
     public Ref_Puntos mapRow(ResultSet resultSet, int i) throws SQLException {
         Ref_Puntos refPuntos =new Ref_Puntos();
         refPuntos.setMontoRef(resultSet.getInt("va_montoref"));
-        refPuntos.setMontoRef(resultSet.getInt("nu_puntosref"));
+        refPuntos.setPuntosRef(resultSet.getInt("nu_puntosref"));
         return refPuntos;
     }
 
