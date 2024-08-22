@@ -47,9 +47,9 @@ import java.util.UUID;
 
     public Reg_Descuento selectById( Reg_Descuento regDescuento){
         try{
-            String QUERY = "SELECT nu_codigodesc,id_adicionado, ds_tipo_desc FROM reg_descuento WHERE id=?";
+            String QUERY = "SELECT ds_tipo_desc, fe_desc, po_desc, id_aficionado, id_tarifa, nu_codigodesc FROM reg_descuento WHERE id=?";
 
-            return jdbcTemplate.queryForObject(QUERY, new Reg_DescuentoMapper(),regDescuento.getId());
+            return jdbcTemplate.queryForObject(QUERY, new Reg_DescuentoMapper(), regDescuento.getId());
         } catch(EmptyResultDataAccessException ex){
             return null;
         }
@@ -57,7 +57,7 @@ import java.util.UUID;
 
 
     public List<Reg_Descuento > selectAll(){
-        String selectAll = "SELECT nu_codigodesc,id_adicionado, ds_tipo_desc FROM reg_descuento";
+        String selectAll = "SELECT po_desc, nu_codigodesc,id_aficionado,fe_desc, id_tarifa, ds_tipo_desc FROM reg_descuento";
 
         return jdbcTemplate.query(selectAll, new Reg_DescuentoMapper());
     }

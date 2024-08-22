@@ -10,7 +10,25 @@ public class Reg_Descuento {
     private String tipoDesc;
     private Aficionado idAfc;
     private Tarifa idTrf;
+    private int porcentaje;
 
+    public Reg_Descuento() {
+        this.id = "";
+        this.codigoDesc = 0;
+        this.fecha = new Date();
+        this.tipoDesc = "";
+        this.idAfc = new Aficionado();
+        this.idTrf = new Tarifa();
+        this.porcentaje = 0;
+    }
+
+    public void setPorcentaje(int porcentaje) {
+        this.porcentaje = porcentaje;
+    }
+
+    public int getPorcentaje() {
+        return porcentaje;
+    }
 
     public Tarifa getIdTrf() {
         return idTrf;
@@ -29,16 +47,6 @@ public class Reg_Descuento {
     }
 
 
-
-
-    public Reg_Descuento( ) {
-        idAfc = new Aficionado();
-        idTrf = new Tarifa();
-        tipoDesc = "";
-        fecha =  new Date();
-        codigoDesc = 0;
-        id ="";
-    }
 
     public void setId(String id) {
         this.id = id;
@@ -76,6 +84,8 @@ public class Reg_Descuento {
     public String getTipoDesc() {
         return tipoDesc;
     }
+
+
 
 
 }

@@ -13,14 +13,18 @@ public class Reg_DescuentoMapper implements RowMapper<Reg_Descuento> {
     public Reg_Descuento mapRow(ResultSet resultSet, int i) throws SQLException {
            Reg_Descuento regDescuento = new Reg_Descuento();
            Aficionado afi =new Aficionado();
-            Tarifa  tr = new Tarifa();
+           Tarifa  tr = new Tarifa();
 
-        regDescuento.setId(resultSet.getString("id"));
+        regDescuento.setPorcentaje(resultSet.getInt("po_desc"));
         regDescuento.setTipoDesc (resultSet.getString("ds_tipo_desc"));
         regDescuento.setFecha(resultSet.getDate("fe_desc"));
-        afi.setCedula (resultSet.getString("id_aficionado"));
         regDescuento.setCodigoDesc(resultSet.getInt("nu_codigodesc"));
+
+        afi.setCedula(resultSet.getString("id_aficionado"));
         tr.setId (resultSet.getString("id_tarifa"));
+
+        regDescuento.setIdTrf(tr);
+        regDescuento.setIdAfc(afi);
 
         return regDescuento;
     }

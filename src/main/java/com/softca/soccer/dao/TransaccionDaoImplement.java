@@ -39,7 +39,7 @@ public class TransaccionDaoImplement implements TransaccionDao{
                 "    ?, \n" +
                 "    ?, \n" +
                 "    ?, \n" +
-                "    uuid_generate_v4()\n" +
+                "    uuid_generate_v4()::text\n" +
                 ");\n";
 
 
@@ -70,6 +70,9 @@ public class TransaccionDaoImplement implements TransaccionDao{
 
         try {
             String QUERY = "SELECT A.fe_compra, A.nu_factura, A.va_montoc, A.bo_estado, A.id_tienda, B.nu_nit_tienda, B.ds_tipo_tienda, A.ds_cc_comprador, A.ds_tipo_compra, A.id FROM transaccion A INNER JOIN tienda B ON A.id_tienda = B.id WHERE A.id = ?";
+
+
+
             return jdbcTemplate.queryForObject(QUERY, new TransaccionesMapper(),transaccion.getId());
 
         }catch (EmptyResultDataAccessException ex){
