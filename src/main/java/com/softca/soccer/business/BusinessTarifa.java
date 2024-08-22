@@ -7,4 +7,5 @@ public interface BusinessTarifa {
     public void registrar( Tarifa tarifa ) throws Exception;
     public Tarifa selectById(Tarifa tarifa ) throws Exception;
     public List<Tarifa> selectAll() throws Exception;
+    public void delete( Tarifa tarifa ) throws Exception;
 }

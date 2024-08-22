@@ -21,10 +21,6 @@ public class TransaccionesMapper  implements RowMapper<Transacciones> {
         transacciones.setTipo_compra(resultSet.getString("ds_tipo_compra"));
 
         tiendas.setId(resultSet.getString("id_tienda"));
-        tiendas.setNit(resultSet.getInt("nu_nit_tienda"));
-        tiendas.setTipoTienda(resultSet.getString("ds_tipo_tienda"));
-
-
         transacciones.setidTnd(tiendas);
 
         return transacciones;

@@ -41,4 +41,9 @@ public class BusinessTarifaImplement implements BusinessTarifa{
 
         return trfdata;
     }
+
+    public void delete( Tarifa tarifa ) throws Exception {
+        managerTarifa.delete(tarifa);
+
+    }
 }

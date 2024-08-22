@@ -14,6 +14,8 @@ import java.util.UUID;
 
 public class TransaccionDaoImplement implements TransaccionDao{
 
+
+
     private final JdbcTemplate jdbcTemplate;
 
     public TransaccionDaoImplement(DataSource dataSource){
@@ -39,8 +41,8 @@ public class TransaccionDaoImplement implements TransaccionDao{
                 "    ?, \n" +
                 "    ?, \n" +
                 "    ?, \n" +
-                "    uuid_generate_v4()::text\n" +
-                ");\n";
+                "    uuid_generate_v4()::text " +
+                ");";
 
 
 

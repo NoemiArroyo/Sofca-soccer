@@ -21,11 +21,11 @@ import java.util.UUID;
 
 
     public void insert(Reg_Descuento regDescuento) {
-        String INSERT ="INSERT INTO public.reg_descuento(id, ds_tipo_desc, fe_desc, po_desc, id_aficionado, id_tarifa, nu_codigodesc) VALUES (?, ?, ?)";
+        String INSERT ="INSERT INTO reg_descuento(ds_tipo_desc, fe_desc, po_desc, id_aficionado, id_tarifa, nu_codigodesc, id) VALUES (?, ?, ?,?,?,?,?)";
 
         String uuid = UUID.randomUUID().toString();
          regDescuento.setId(uuid);
-        jdbcTemplate.update(INSERT,regDescuento.getId(),regDescuento.getTipoDesc(), regDescuento.getFecha(),regDescuento.getIdAfc(), regDescuento.getIdTrf(), regDescuento.getCodigoDesc());
+        jdbcTemplate.update(INSERT,regDescuento.getTipoDesc(), regDescuento.getFecha(),regDescuento.getPorcentaje(),regDescuento.getIdAfc().getId(), regDescuento.getIdTrf().getId(), regDescuento.getCodigoDesc(),regDescuento.getId());
     }
 
 

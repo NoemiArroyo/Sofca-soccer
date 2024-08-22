@@ -20,7 +20,7 @@ public class Reg_DescuentoMapper implements RowMapper<Reg_Descuento> {
         regDescuento.setFecha(resultSet.getDate("fe_desc"));
         regDescuento.setCodigoDesc(resultSet.getInt("nu_codigodesc"));
 
-        afi.setCedula(resultSet.getString("id_aficionado"));
+        afi.setId(resultSet.getString("id_aficionado"));
         tr.setId (resultSet.getString("id_tarifa"));
 
         regDescuento.setIdTrf(tr);

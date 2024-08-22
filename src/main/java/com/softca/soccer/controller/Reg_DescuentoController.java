@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @Slf4j
-@RequestMapping("/descuento /")
+@RequestMapping("/descuento/")
 
      public class Reg_DescuentoController {
 

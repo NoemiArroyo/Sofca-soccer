@@ -4,11 +4,9 @@ import com.softca.soccer.business.BusinessTarifa;
 import com.softca.soccer.dto.Tarifa;
 import com.softca.soccer.mensaje.ResponseMessage;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @Slf4j
@@ -47,5 +45,31 @@ public class TarifaController {
         }
         return ResponseEntity.ok(message);
     }
+
+    @RequestMapping(method = RequestMethod.DELETE, value = "/delete/{id}")
+    public ResponseEntity<Void> deleteTransaction(@PathVariable final Tarifa id) throws Exception {
+        log.debug("deleteTransaction queried with id: {}", id); //$NON-NLS-1$
+
+        // Asumiendo que tienes un método en tu servicio que verifica si la transacción existe
+        Tarifa exists = this.businessTarifa.selectById(id);
+
+        if (exists!=null) {
+            try {
+                this.businessTarifa.delete(id);
+                log.debug("Transaction with id: {} deleted successfully.", id); //$NON-NLS-1$
+                return new ResponseEntity<>(HttpStatus.OK);
+            } catch (Exception ex) {
+                log.error("Error deleting transaction with id: {}", id, ex); //$NON-NLS-1$
+                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        } else {
+            log.debug("Transaction with id: {} does NOT exist.", id); //$NON-NLS-1$
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+
+
+
 
 }
