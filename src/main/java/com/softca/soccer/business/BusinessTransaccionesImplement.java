@@ -26,6 +26,7 @@ public class BusinessTransaccionesImplement implements  BusinessTransacciones{
         this.managerTransacciones = managerTransacciones;
     }
 
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = BusinessException.class)
     public void registrar(Transacciones transacciones ) throws BusinessException{
         try{
             managerTransacciones.crear(transacciones);

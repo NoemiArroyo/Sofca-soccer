@@ -2,12 +2,14 @@ package com.softca.soccer.dao;
 
 
 import com.softca.soccer.dto.Reg_Descuento;
+import com.softca.soccer.exception.DaoException;
 import com.softca.soccer.mapper.Reg_DescuentoMapper;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import javax.sql.DataSource;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @Repository
@@ -20,27 +22,40 @@ import java.util.UUID;
     }
 
 
-    public void insert(Reg_Descuento regDescuento) {
+    public void insert(Reg_Descuento regDescuento) throws DaoException {
+
         String INSERT ="INSERT INTO reg_descuento(ds_tipo_desc, fe_desc, po_desc, id_aficionado, id_tarifa, nu_codigodesc, id) VALUES (?, ?, ?,?,?,?,?)";
 
-        String uuid = UUID.randomUUID().toString();
-         regDescuento.setId(uuid);
-        jdbcTemplate.update(INSERT,regDescuento.getTipoDesc(), regDescuento.getFecha(),regDescuento.getPorcentaje(),regDescuento.getIdAfc().getId(), regDescuento.getIdTrf().getId(), regDescuento.getCodigoDesc(),regDescuento.getId());
+        try{
+            String uuid = UUID.randomUUID().toString();
+            regDescuento.setId(uuid);
+            jdbcTemplate.update(INSERT,regDescuento.getTipoDesc(), regDescuento.getFecha(),regDescuento.getPorcentaje(),regDescuento.getIdAfc().getId(), regDescuento.getIdTrf().getId(), regDescuento.getCodigoDesc(),regDescuento.getId());
+        }catch (Exception ex){
+            throw new DaoException(ex);
+        }
     }
 
 
 
-    public void update(Reg_Descuento regDescuento){
+    public void update(Reg_Descuento regDescuento) throws DaoException{
         String update ="UPDATE reg_descuento\n" +
-                "SET nu_codigodesc=?\n" +
+                "SET ds_tipo_desc=?, fe_desc=?, po_desc=?, id_tarifa=?, nu_codigodesc=?\n" +
                 "WHERE id=?";
-        jdbcTemplate.update(update,regDescuento.getCodigoDesc(),regDescuento.getId());
+        try{
+            jdbcTemplate.update(update,regDescuento.getTipoDesc(), regDescuento.getFecha(), regDescuento.getPorcentaje(),regDescuento.getIdTrf(),regDescuento.getCodigoDesc(),regDescuento.getId());
+        }catch (Exception ex){
+            throw new DaoException(ex);
+        }
 
     }
 
-    public void delete(Reg_Descuento regDescuento){
+    public void delete(Reg_Descuento regDescuento) throws DaoException{
         String DELETE ="DELETE FROM reg_descuento WHERE id=?";
-        jdbcTemplate.update(DELETE,regDescuento.getId());
+        try{
+            jdbcTemplate.update(DELETE,regDescuento.getId());
+        }catch (Exception ex){
+            throw new DaoException(ex);
+        }
     }
 
 
@@ -56,10 +71,14 @@ import java.util.UUID;
     }
 
 
-    public List<Reg_Descuento > selectAll(){
-        String selectAll = "SELECT po_desc, nu_codigodesc,id_aficionado,fe_desc, id_tarifa, ds_tipo_desc FROM reg_descuento";
+    public List<Map<String, Object>> selectAll() throws DaoException{
+        String selectAll = "SELECT id, po_desc, nu_codigodesc,id_aficionado,fe_desc, id_tarifa, ds_tipo_desc FROM reg_descuento";
 
-        return jdbcTemplate.query(selectAll, new Reg_DescuentoMapper());
+        try{
+            return jdbcTemplate.queryForList(selectAll);
+        }catch (Exception ex){
+            throw new DaoException(ex);
+        }
     }
 
 }

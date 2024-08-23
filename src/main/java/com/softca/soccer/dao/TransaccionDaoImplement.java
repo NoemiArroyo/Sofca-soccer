@@ -83,7 +83,7 @@ public class TransaccionDaoImplement implements TransaccionDao{
     }
 
 
-    public Transacciones selectById( Transacciones transaccion)throws DaoException{
+    public Transacciones selectById( Transacciones transaccion){
 
         try {
             String QUERY = "SELECT A.fe_compra, A.nu_factura, A.va_montoc, A.bo_estado, A.id_tienda, B.nu_nit_tienda, B.ds_tipo_tienda, A.ds_cc_comprador, A.ds_tipo_compra, A.id FROM transaccion A INNER JOIN tienda B ON A.id_tienda = B.id WHERE A.id = ?";
@@ -99,7 +99,9 @@ public class TransaccionDaoImplement implements TransaccionDao{
     }
     public List<Map<String, Object>> selectAll() throws DaoException{
 
-        String selectAll = "SELECT id, fe_compra, nu_factura, va_montoc, bo_estado, id_tienda, ds_cc_comprador, ds_tipo_compra FROM transaccion";
+        String selectAll = "SELECT id, " +
+                "" +
+                "fe_compra, nu_factura, va_montoc, bo_estado, id_tienda, ds_cc_comprador, ds_tipo_compra FROM transaccion";
         try{
             return jdbcTemplate.queryForList(selectAll);
         }catch (Exception ex){

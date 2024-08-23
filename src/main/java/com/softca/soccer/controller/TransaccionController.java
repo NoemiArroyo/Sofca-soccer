@@ -14,6 +14,7 @@ import java.util.Map;
 
 @RestController
 @Slf4j
+@CrossOrigin
 @RequestMapping("/transaccion/")
 public class TransaccionController{
 

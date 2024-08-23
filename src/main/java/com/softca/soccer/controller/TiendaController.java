@@ -14,6 +14,7 @@ import java.util.Map;
 
 @RestController
 @Slf4j
+@CrossOrigin
 @RequestMapping("/tienda/")
 
 public class TiendaController {

@@ -64,10 +64,10 @@ public class ManagerTarifaImplement implements ManagerTarifa {
 
             return this.tarifaDao.selectAll();
 
-        }catch (DaoException ex){
+        } catch (DaoException ex){
             throw new ManageException(ex.getMessage());
 
-        }catch (Exception ex){
+        } catch (Exception ex){
             throw new ManageException(ex.getMessage());
         }
     }
