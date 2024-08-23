@@ -9,6 +9,8 @@ import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.util.List;
+import java.util.Map;
+
 @Repository
 
 public class TiendaDaoImplement implements  TiendaDao {
@@ -51,11 +53,11 @@ public class TiendaDaoImplement implements  TiendaDao {
     }
 
 
-    public List<Tiendas> selectAll(){
-        String selectAll = "SELECT nu_nit_tienda,ds_tipo_tienda\n" +
+    public List<Map<String, Object>> selectAll(){
+        String selectAll = "SELECT id, nu_nit_tienda,ds_tipo_tienda\n" +
                     "FROM tienda";
 
-        return jdbcTemplate.query(selectAll, new TiendasMapper());
+        return jdbcTemplate.queryForList(selectAll);
     }
 
 }

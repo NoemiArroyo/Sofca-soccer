@@ -3,6 +3,7 @@ import com.softca.soccer.dao.TiendaDao;
 import org.springframework.stereotype.Component;
 import com.softca.soccer.dto.Tiendas;
 import java.util.List;
+import java.util.Map;
 
 
 @Component
@@ -28,14 +29,12 @@ public class ManagerTiendaImplement implements ManagerTienda{
     }
 
     public Tiendas selectById(Tiendas tienda) throws Exception{
-
         Tiendas tiendaDato = tiendasDao.selectById(tienda);
         return tiendaDato;
     }
 
-    public List<Tiendas> selectAll() throws Exception{
-        List<Tiendas> lista =  tiendasDao.selectAll();
-        return lista;
+    public List<Map<String, Object>> selectAll() throws Exception{
+        return this.tiendasDao.selectAll();
     }
 
     public  void  delete(Tiendas tiendas ) throws Exception{

@@ -1,10 +1,12 @@
 package com.softca.soccer.business;
+import com.softca.soccer.dto.Tarifa;
 import com.softca.soccer.dto.Tiendas;
 import com.softca.soccer.manager.ManagerTienda;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 @Component
 @Transactional
@@ -32,14 +34,14 @@ public class BusinessTiendaImplement implements  BusinessTienda{
         return tnddata;
     }
 
-    public List<Tiendas> selectAll() throws Exception{
+    public List<Map<String, Object>> selectAll() throws Exception{
+        return this.managerTienda.selectAll();
 
-            List<Tiendas> tnddata = null;
+    }
+    public void delete( Tiendas tiendas ) throws Exception {
+        this.managerTienda.delete(tiendas);
 
-            tnddata= managerTienda.selectAll();
-
-            return tnddata;
-        }
+    }
 
 
 

@@ -1,15 +1,19 @@
 package com.softca.soccer.business;
 
 import com.softca.soccer.dto.Tarifa;
+import com.softca.soccer.exception.BusinessException;
+import com.softca.soccer.exception.ManageException;
 import com.softca.soccer.manager.ManagerTarifa;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 
 @Component
-@Transactional
+
 public class BusinessTarifaImplement implements BusinessTarifa{
 
 
@@ -20,30 +24,53 @@ public class BusinessTarifaImplement implements BusinessTarifa{
 
         this.managerTarifa = managerTarifa;
     }
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = BusinessException.class)
+    public void registrar( Tarifa tarifa ) throws BusinessException {
+        try{
+            managerTarifa.crear(tarifa);
+        }catch(ManageException ex){
+            throw new BusinessException(ex.getMessage());
+        }catch (Exception ex){
+            throw new BusinessException(ex.getMessage());
+        }
 
-    public void registrar( Tarifa tarifa ) throws Exception {
-         managerTarifa.crear(tarifa);
 
     }
 
-
-    public Tarifa selectById(Tarifa tarifa ) throws Exception{
+    @Transactional(readOnly = true)
+    public Tarifa selectById(Tarifa tarifa ) throws BusinessException {
         Tarifa trfdata =null;
-
-        trfdata= managerTarifa.selectById(tarifa);
-
-        return trfdata;
-    }
-
-    public List<Tarifa> selectAll() throws Exception{
-        List<Tarifa> trfdata =null;
-         trfdata= managerTarifa.selectAll();
+        try{
+            trfdata= managerTarifa.selectById(tarifa);
+        }catch(ManageException ex){
+            throw new BusinessException(ex.getMessage());
+        }catch (Exception ex){
+            throw new BusinessException(ex.getMessage());
+        }
 
         return trfdata;
     }
+    @Transactional(readOnly = true)
+    public List<Map<String, Object>> selectAll() throws BusinessException{
+        try{
+             return this. managerTarifa.selectAll();
+        }catch(ManageException ex){
+            throw new BusinessException(ex.getMessage());
+        }catch (Exception ex){
+            throw new BusinessException(ex.getMessage());
+        }
+    }
 
-    public void delete( Tarifa tarifa ) throws Exception {
-        managerTarifa.delete(tarifa);
+
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = BusinessException.class)
+    public void delete( Tarifa tarifa ) throws BusinessException {
+        try{
+            this.managerTarifa.delete(tarifa);
+        }catch(ManageException ex){
+            throw new BusinessException(ex.getMessage());
+        }catch (Exception ex){
+            throw new BusinessException(ex.getMessage());
+        }
 
     }
 }
