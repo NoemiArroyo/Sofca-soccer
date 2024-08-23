@@ -23,7 +23,7 @@ public class AficionadoController {
 
     @PostMapping({"/saveOrUpdate"})
     public ResponseEntity<ResponseMessage<Aficionado>> saveOrUpdate(@RequestBody Aficionado request) {
-        log.debug("REST request to saveOrUpdate Aficionado : {}", request);
+
         ResponseMessage message = null;
         try {
             this.businesAficionado.registrar(request);
@@ -36,7 +36,7 @@ public class AficionadoController {
 
     @PostMapping({"/selectById"})
     public ResponseEntity<ResponseMessage<Aficionado>> selectById(@RequestBody Aficionado request) {
-        log.debug("REST request to saveOrUpdate Aficionado : {}", request);
+
         ResponseMessage message = null;
         try {
             Aficionado aficionadofound= this.businesAficionado.selectById(request);

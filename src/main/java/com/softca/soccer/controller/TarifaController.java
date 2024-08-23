@@ -24,7 +24,6 @@ public class TarifaController {
 
     @PostMapping({"/saveOrUpdate"})
     public ResponseEntity<ResponseMessage<Tarifa>> saveOrUpdate(@RequestBody Tarifa request) {
-        log.debug("REST request to saveOrUpdate tarifa : {}", request);
         ResponseMessage message = null;
         try {
             this.businessTarifa.registrar(request);
@@ -37,7 +36,7 @@ public class TarifaController {
 
     @PostMapping({"/selectById"})
     public ResponseEntity<ResponseMessage<Tarifa>> selectById(@RequestBody Tarifa request) {
-        log.debug("REST request to saveOrUpdate tarifa : {}", request);
+
         ResponseMessage message = null;
         try {
             Tarifa tarifafound= this.businessTarifa.selectById(request);
@@ -66,7 +65,6 @@ public class TarifaController {
 
     @PostMapping("/delete")
     public ResponseEntity<ResponseMessage<Tarifa>> deleteById(@RequestBody Tarifa request) {
-        log.debug("REST request to deleteById tarifa : {}", request);
         ResponseMessage message = null;
         try {
             this.businessTarifa.delete(request);

@@ -26,7 +26,7 @@ public class Ref_PuntosController {
     @PostMapping({"/saveOrUpdate"})
     public ResponseEntity<ResponseMessage<Ref_Puntos>> saveOrUpdate(@RequestBody Ref_Puntos request) {
 
-        log.debug ("REST request to saveOrUpdate ref_puntos : {}", request);
+
         ResponseMessage message = null;
         try {
             this.businessRefPuntos.registrar(request);
@@ -39,7 +39,7 @@ public class Ref_PuntosController {
 
     @PostMapping({"/selectById"})
     public ResponseEntity<ResponseMessage<Ref_Puntos>> selectById(@RequestBody Ref_Puntos request) {
-        log.debug("REST request to saveOrUpdate ref_puntos : {}", request);
+
         ResponseMessage message = null;
         try {
             Ref_Puntos refPuntosfound= this.businessRefPuntos.selectById(request);

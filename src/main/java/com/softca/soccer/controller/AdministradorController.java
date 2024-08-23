@@ -26,7 +26,7 @@ public class AdministradorController {
 
     @PostMapping({"/saveOrUpdate"})
     public ResponseEntity<ResponseMessage<Administrador>> saveOrUpdate(@RequestBody Administrador request) {
-        log.debug ("REST request to saveOrUpdate administrador : {}", request);
+
         ResponseMessage message = null;
         try {
             this.businessAdministrador.registrar(request);
@@ -39,7 +39,7 @@ public class AdministradorController {
 
     @PostMapping({"/selectById"})
     public ResponseEntity<ResponseMessage<Administrador>> selectById(@RequestBody Administrador request) {
-        log.debug("REST request to saveOrUpdate tarifa : {}", request);
+
         ResponseMessage message = null;
         try {
             Administrador adminfound= this.businessAdministrador.selectById(request);

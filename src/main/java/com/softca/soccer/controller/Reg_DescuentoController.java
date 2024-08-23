@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 
     @PostMapping({"/saveOrUpdate"})
     public ResponseEntity<ResponseMessage<Reg_Descuento>> saveOrUpdate(@RequestBody Reg_Descuento request) {
-        log.debug("REST request to saveOrUpdate reg_descuento : {}", request);
+
         ResponseMessage message = null;
         try {
             this.businessRegDescuento.registrar(request);
@@ -39,7 +39,7 @@ import org.springframework.web.bind.annotation.RestController;
 
     @PostMapping({"/selectById"})
     public ResponseEntity<ResponseMessage<Reg_Descuento>> selectById(@RequestBody Reg_Descuento request) {
-        log.debug("REST request to saveOrUpdate reg_descuento : {}", request);
+
         ResponseMessage message = null;
         try {
             Reg_Descuento rdfound= this.businessRegDescuento.selectById(request);

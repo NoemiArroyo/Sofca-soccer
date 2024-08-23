@@ -29,7 +29,7 @@ public class TiendaController {
 
     @PostMapping({"/saveOrUpdate"})
     public ResponseEntity<ResponseMessage<Tiendas>> saveOrUpdate(@RequestBody Tiendas request) {
-        log.debug("REST request to saveOrUpdate una tienda : {}", request);
+
         ResponseMessage message = null;
         try {
             this.businessTienda.registrar(request);
@@ -43,7 +43,7 @@ public class TiendaController {
 
     @PostMapping({"/selectById"})
     public ResponseEntity<ResponseMessage<Tiendas>> selectById(@RequestBody Tiendas request) {
-        log.debug("REST request to saveOrUpdate tienda : {}", request);
+
         ResponseMessage message = null;
         try {
             Tiendas tiendafound= this.businessTienda.selectById(request);

@@ -3,7 +3,7 @@ import com.softca.soccer.dto.Tarifa;
 import com.softca.soccer.dto.Tiendas;
 import com.softca.soccer.manager.ManagerTienda;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.annotation.Transactional ;
 
 import java.util.List;
 import java.util.Map;
@@ -42,7 +42,6 @@ public class BusinessTiendaImplement implements  BusinessTienda{
         this.managerTienda.delete(tiendas);
 
     }
-
 
 
 }
