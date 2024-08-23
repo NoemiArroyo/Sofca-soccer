@@ -23,7 +23,7 @@ public class TransaccionController{
 
     @PostMapping({"/saveOrUpdate"})
     public ResponseEntity<ResponseMessage<Transacciones>> saveOrUpdate(@RequestBody Transacciones request) {
-        log.debug("REST request to saveOrUpdate tarifa : {}", request);
+
         ResponseMessage message = null;
         try {
             this.businessTransacciones.registrar(request);
@@ -37,7 +37,7 @@ public class TransaccionController{
 
     @PostMapping({"/selectById"})
     public ResponseEntity<ResponseMessage<Transacciones>> selectById(@RequestBody Transacciones request) {
-        log.debug("REST request to saveOrUpdate tarifa : {}", request);
+
         ResponseMessage message = null;
         try {
             Transacciones transafound= this.businessTransacciones.selectById(request);

@@ -14,6 +14,7 @@ import java.util.Map;
 
 @RestController
 @Slf4j
+@CrossOrigin
 @RequestMapping("/tienda/")
 
 public class TiendaController {
@@ -72,7 +73,7 @@ public class TiendaController {
 
     @PostMapping("/delete")
     public ResponseEntity<ResponseMessage<Tarifa>> deleteById(@RequestBody Tiendas request) {
-        log.debug("REST request to deleteById tarifa : {}", request);
+
         ResponseMessage message = null;
         try {
             this.businessTienda.delete(request);
@@ -84,6 +85,5 @@ public class TiendaController {
         }
         return ResponseEntity.ok(message);
     }
-
 
 }

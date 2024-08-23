@@ -57,7 +57,7 @@ public class TiendaDaoImplement implements  TiendaDao {
     public Tiendas selectById( Tiendas tiendas){
 
         try {
-            String QUERY = "SELECT nu_nit_tienda,ds_tipo_tienda FROM tienda WHERE id=? ";
+            String QUERY = "SELECT nu_nit_tienda,ds_tipo_tienda, id FROM tienda WHERE id=? ";
             return jdbcTemplate.queryForObject(QUERY, new TiendasMapper(),tiendas.getId());
 
         }catch (EmptyResultDataAccessException ex){
