@@ -10,5 +10,5 @@ public interface BusinessTienda {
     public void registrar( Tiendas tienda ) throws Exception;
     public Tiendas selectById(Tiendas tienda ) throws Exception;
     public List<Map<String, Object>> selectAll() throws Exception;
-    public void delete( Tarifa tarifa ) throws Exception;
+    public void delete( Tiendas tienda ) throws Exception;
 }

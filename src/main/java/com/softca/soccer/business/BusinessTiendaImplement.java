@@ -38,7 +38,10 @@ public class BusinessTiendaImplement implements  BusinessTienda{
         return this.managerTienda.selectAll();
 
     }
-    public void delete( Tiendas tiendas ) throws Exception {
+
+
+
+    public void delete(Tiendas tiendas ) throws Exception{
         this.managerTienda.delete(tiendas);
 
     }
