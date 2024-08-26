@@ -1,6 +1,7 @@
 package com.softca.soccer.dao;
 
 import com.softca.soccer.dto.Aficionado;
+import com.softca.soccer.exception.DaoException;
 import com.softca.soccer.mapper.AficionadoMaper;
 import com.softca.soccer.mapper.TarifasMapper;
 import com.softca.soccer.mapper.TiendasMapper;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @Repository
@@ -17,37 +19,55 @@ public class AficionadoDaoImplement implements AficionadoDao {
 
     private final JdbcTemplate jdbcTemplate;
 
+
+    //COSNTRUCTOR**********************************************************************************
     public AficionadoDaoImplement(DataSource dataSource){
         jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
 
-    public void insert(Aficionado aficionado) {
-        if (aficionado.getEdad()>=18) {
-            String INSERT = "INSERT INTO aficionado(id, ds_nombres, ds_apellidos, ds_cedula, ds_email, ds_municipio, ds_departamento, ds_contraseña, nu_puntos_acumulados, nuedad) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    public void insert(Aficionado aficionado) throws DaoException{
+        String INSERT = "INSERT INTO aficionado(id, ds_nombres, ds_apellidos, ds_cedula, ds_email, ds_municipio, ds_departamento, ds_contraseña, nu_puntos_acumulados, nuedad) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-            String uuid = UUID.randomUUID().toString();
-            aficionado.setId(uuid);
-            jdbcTemplate.update(INSERT, aficionado.getId(), aficionado.getNombres(), aficionado.getApellidos(), aficionado.getCedula(), aficionado.getEmail(), aficionado.getMunicipio(), aficionado.getDepartamento(), aficionado.getContrasena(), aficionado.getPuntos(), aficionado.getEdad());
-        }else {
-            System.out.println("LOS MENORES DE EDAD NO PIUEDEN REGISTRARSE");
+        try{
+                if (aficionado.getEdad()>=18) {
+                    String uuid = UUID.randomUUID().toString();
+                    aficionado.setId(uuid);
+                    jdbcTemplate.update(INSERT, aficionado.getId(), aficionado.getNombres(), aficionado.getApellidos(), aficionado.getCedula(), aficionado.getEmail(), aficionado.getMunicipio(), aficionado.getDepartamento(), aficionado.getContrasena(), aficionado.getPuntos(), aficionado.getEdad());
+                }else {
+                    System.out.println("LOS MENORES DE EDAD NO PUEDEN REGISTRARSE!");
+                }
+            }catch (Exception ex){
+                throw new DaoException(ex);
+            }
+
+    }
+
+
+
+    public void update(Aficionado aficionado) throws DaoException {
+
+        String update ="UPDATE aficionado SET ds_nombres=?, ds_apellidos=?, ds_cedula=?, " +
+                        "ds_email=?, ds_municipio=?, ds_departamento=?, " +
+                        "ds_contraseña=?, nu_puntos_acumulados=?, nuedad=? WHERE id=?";
+        try{
+            jdbcTemplate.update(update,aficionado.getNombres(), aficionado.getApellidos(),
+                    aficionado.getCedula(), aficionado.getEmail(), aficionado.getMunicipio(),
+                    aficionado.getDepartamento(), aficionado.getContrasena(), aficionado.getPuntos(),
+                    aficionado.getEdad(), aficionado.getId());
+        }catch (Exception ex){
+            throw new DaoException(ex);
         }
-
     }
-    public void update(Aficionado aficionado) {
-
-            String update ="UPDATE aficionado SET ds_cedula=? WHERE id=?";
-            jdbcTemplate.update(update,aficionado.getCedula(),aficionado.getId());
 
 
-
-
-
-
-    }
-    public void delete(Aficionado aficionado){
+    public void delete(Aficionado aficionado) throws DaoException{
         String DELETE ="DELETE FROM aficionado WHERE id=?";
-        jdbcTemplate.update(DELETE,aficionado.getId());
+        try{
+            jdbcTemplate.update(DELETE,aficionado.getId());
+        }catch (Exception ex){
+            throw new DaoException(ex);
+        }
 
 
     }
@@ -63,11 +83,14 @@ public class AficionadoDaoImplement implements AficionadoDao {
         }
 
     }
-    public List<Aficionado> selectAll(){
+    public List<Map<String, Object>> selectAll() throws DaoException{
 
         String selectAll = "SELECT id, ds_nombres, ds_apellidos, ds_cedula, ds_email, ds_municipio, ds_departamento, ds_contraseña, nu_puntos_acumulados, nuedad FROM aficionado;   ";
-
-        return jdbcTemplate.query(selectAll, new AficionadoMaper());
+        try{
+            return jdbcTemplate.queryForList(selectAll);
+        }catch (Exception ex){
+            throw new DaoException(ex);
+        }
 
     }
 }
