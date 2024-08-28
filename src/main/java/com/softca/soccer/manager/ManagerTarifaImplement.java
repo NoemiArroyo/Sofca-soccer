@@ -25,12 +25,11 @@ public class ManagerTarifaImplement implements ManagerTarifa {
 
         try {
             Tarifa tarifaDato = tarifaDao.selectById(tarifa);
-
-            if(tarifaDato==null){
-                tarifaDao.insert(tarifa);
-            }else{
-                tarifaDao.update(tarifa);
-            }
+                if(tarifaDato==null){
+                    tarifaDao.insert(tarifa);
+                }else{
+                    tarifaDao.update(tarifa);
+                }
         }catch (DaoException ex){
             throw new ManageException(ex.getMessage());
 
