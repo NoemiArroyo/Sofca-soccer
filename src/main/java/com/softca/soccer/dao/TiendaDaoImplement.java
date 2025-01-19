@@ -1,6 +1,7 @@
 package com.softca.soccer.dao;
 
 import com.softca.soccer.dto.Tiendas;
+import com.softca.soccer.exception.DaoException;
 import com.softca.soccer.mapper.TarifasMapper;
 import com.softca.soccer.mapper.TiendasMapper;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -25,20 +26,32 @@ public class TiendaDaoImplement implements  TiendaDao {
 
 
 
-    public void insert(Tiendas tiendas){
+    public void insert(Tiendas tiendas) throws DaoException {
     String INSERT = "INSERT INTO tienda (id, nu_nit_tienda, ds_tipo_tienda) VALUES (uuid_generate_v4()::text, ?, ?)";
-
-    jdbcTemplate.update(INSERT,tiendas.getNit(), tiendas.getTipoTienda());
+    try{
+        jdbcTemplate.update(INSERT,tiendas.getNit(), tiendas.getTipoTienda());
+    }catch (Exception ex){
+            throw new DaoException(ex);
     }
+   }
 
-    public void update(Tiendas tiendas){
+    public void update(Tiendas tiendas) throws DaoException{
         String UPDATE = "UPDATE tienda SET ds_tipo_tienda=? WHERE nu_nit_tienda=?";
-        jdbcTemplate.update(UPDATE, tiendas.getTipoTienda(),tiendas.getNit());
+        try{
+            jdbcTemplate.update(UPDATE, tiendas.getTipoTienda(),tiendas.getNit());
+        }catch (Exception ex){
+            throw new DaoException(ex);
+        }
+
     }
 
-    public void delete(Tiendas tiendas){
+    public void delete(Tiendas tiendas)throws DaoException{
         String DELETE = "DELETE FROM tienda WHERE id=? ";
-        jdbcTemplate.update(DELETE,tiendas.getId());
+        try{
+         jdbcTemplate.update(DELETE,tiendas.getId());
+        }catch (Exception ex){
+            throw new DaoException(ex);
+        }
     }
 
     public Tiendas selectById( Tiendas tiendas){
@@ -53,11 +66,12 @@ public class TiendaDaoImplement implements  TiendaDao {
     }
 
 
-    public List<Map<String, Object>> selectAll(){
+    public List<Map<String, Object>> selectAll()throws DaoException{
         String selectAll = "SELECT id, nu_nit_tienda,ds_tipo_tienda\n" +
                     "FROM tienda";
-
-        return jdbcTemplate.queryForList(selectAll);
-    }
-
+        try{
+            return jdbcTemplate.queryForList(selectAll);
+        }catch (Exception ex){
+            throw new DaoException(ex);    }
+        }
 }

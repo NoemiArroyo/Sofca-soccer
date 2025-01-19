@@ -25,12 +25,11 @@ public class ManagerTarifaImplement implements ManagerTarifa {
 
         try {
             Tarifa tarifaDato = tarifaDao.selectById(tarifa);
-
-            if(tarifaDato==null){
-                tarifaDao.insert(tarifa);
-            }else{
-                tarifaDao.update(tarifa);
-            }
+                if(tarifaDato==null){
+                    tarifaDao.insert(tarifa);
+                }else{
+                    tarifaDao.update(tarifa);
+                }
         }catch (DaoException ex){
             throw new ManageException(ex.getMessage());
 
@@ -64,10 +63,10 @@ public class ManagerTarifaImplement implements ManagerTarifa {
 
             return this.tarifaDao.selectAll();
 
-        }catch (DaoException ex){
+        } catch (DaoException ex){
             throw new ManageException(ex.getMessage());
 
-        }catch (Exception ex){
+        } catch (Exception ex){
             throw new ManageException(ex.getMessage());
         }
     }

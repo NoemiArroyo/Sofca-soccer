@@ -1,6 +1,7 @@
 package com.softca.soccer.dao;
 
 import com.softca.soccer.dto.Transacciones;
+import com.softca.soccer.exception.DaoException;
 import com.softca.soccer.mapper.TransaccionesMapper;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @Repository
@@ -22,7 +24,7 @@ public class TransaccionDaoImplement implements TransaccionDao{
         jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-    public void insert(Transacciones transaccion) {
+    public void insert(Transacciones transaccion)throws DaoException {
         String INSERT ="INSERT INTO transaccion (\n" +
                 "    fe_compra, \n" +
                 "    nu_factura, \n" +
@@ -45,29 +47,42 @@ public class TransaccionDaoImplement implements TransaccionDao{
                 ");";
 
 
-
-        jdbcTemplate.update(INSERT,
-                transaccion.getFecha(),
-                transaccion.getNumero(),
-                transaccion.getMonto(),
-                transaccion.getEstado(),
-                transaccion.getidTnd().getId(),
-                transaccion.getcc_comprador(),
-                transaccion.getTipo_compra());
+        try{
+            jdbcTemplate.update(INSERT,
+                    transaccion.getFecha(),
+                    transaccion.getNumero(),
+                    transaccion.getMonto(),
+                    transaccion.getEstado(),
+                    transaccion.getidTnd().getId(),
+                    transaccion.getcc_comprador(),
+                    transaccion.getTipo_compra());
+        }catch (Exception ex){
+            throw new DaoException(ex);
+        }
     }
 
-    public void update(Transacciones transaccion) {
+    public void update(Transacciones transaccion) throws DaoException{
 
         String update ="UPDATE transaccion SET ds_cc_comprador=? WHERE id=?";
-        jdbcTemplate.update(update,transaccion.getcc_comprador(),transaccion.getId());
-
+        try{
+            jdbcTemplate.update(update,transaccion.getcc_comprador(),transaccion.getId());
+        }catch (Exception ex){
+            throw new DaoException(ex);
+        }
     }
-    public void delete(Transacciones transaccion){
+
+    public void delete(Transacciones transaccion) throws DaoException{
 
         String DELETE = "DELETE FROM transaccion WHERE id=? ";
-        jdbcTemplate.update(DELETE,transaccion.getId());
+        try{
+            jdbcTemplate.update(DELETE,transaccion.getId());
+        }catch (Exception ex){
+            throw new DaoException(ex);
+        }
 
     }
+
+
     public Transacciones selectById( Transacciones transaccion){
 
         try {
@@ -82,11 +97,17 @@ public class TransaccionDaoImplement implements TransaccionDao{
         }
 
     }
-    public List<Transacciones > selectAll(){
+    public List<Map<String, Object>> selectAll() throws DaoException{
 
-        String selectAll = "SELECT fe_compra, nu_factura, va_montoc, bo_estado, id_tienda, ds_cc_comprador, ds_tipo_compra FROM transaccion";
+        String selectAll = "SELECT id, " +
+                "" +
+                "fe_compra, nu_factura, va_montoc, bo_estado, id_tienda, ds_cc_comprador, ds_tipo_compra FROM transaccion";
+        try{
+            return jdbcTemplate.queryForList(selectAll);
+        }catch (Exception ex){
+            throw new DaoException(ex);
+        }
 
-        return jdbcTemplate.query(selectAll, new TransaccionesMapper());
 
     }
 

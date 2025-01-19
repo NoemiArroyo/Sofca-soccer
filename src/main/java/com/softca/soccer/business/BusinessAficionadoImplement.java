@@ -2,11 +2,15 @@ package com.softca.soccer.business;
 
 import com.softca.soccer.dto.Aficionado;
 import com.softca.soccer.dto.Tarifa;
+import com.softca.soccer.exception.BusinessException;
+import com.softca.soccer.exception.ManageException;
 import com.softca.soccer.manager.ManagerAficionado;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 @Component
 @Transactional
@@ -20,21 +24,53 @@ public class BusinessAficionadoImplement  implements BusinesAficionado{
         this.managerAficionado = managerAficionado;
     }
 
-    public void registrar(Aficionado aficionado) throws Exception{
-        managerAficionado.crear(aficionado);
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = BusinessException.class)
+    public void registrar(Aficionado aficionado) throws BusinessException{
+        try{
+            managerAficionado.crear(aficionado);
+        }catch(ManageException ex){
+            throw new BusinessException(ex.getMessage());
+        }catch (Exception ex){
+            throw new BusinessException(ex.getMessage());
+        }
     }
-    public Aficionado selectById(Aficionado aficionado ) throws Exception{
+
+    @Transactional(readOnly=true)
+    public Aficionado selectById(Aficionado aficionado ) throws BusinessException{
         Aficionado afndata =null;
-
-        afndata= managerAficionado.selectById(aficionado);
-
+        try{
+            afndata= managerAficionado.selectById(aficionado);
+        }catch(ManageException ex){
+            throw new BusinessException(ex.getMessage());
+        }catch (Exception ex){
+            throw new BusinessException(ex.getMessage());
+        }
         return afndata;
     }
-    public List<Aficionado> selectAll() throws Exception{
-        List<Aficionado> afndata =null;
-        afndata= managerAficionado.selectAll();
 
-        return afndata;
+    @Transactional(readOnly = true)
+    public List<Map<String, Object>> selectAll() throws BusinessException{
+
+        try{
+            return this.managerAficionado.selectAll();
+        }catch(ManageException ex){
+            throw new BusinessException(ex.getMessage());
+        }catch (Exception ex){
+            throw new BusinessException(ex.getMessage());
+        }
+
+
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = BusinessException.class)
+    public void delete( Aficionado aficionado ) throws BusinessException{
+        try{
+            this.managerAficionado.delete(aficionado);
+        }catch(ManageException ex){
+            throw new BusinessException(ex.getMessage());
+        }catch (Exception ex){
+            throw new BusinessException(ex.getMessage());
+        }
 
     }
 }

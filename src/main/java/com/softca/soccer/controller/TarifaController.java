@@ -12,6 +12,7 @@ import java.util.Map;
 
 @RestController
 @Slf4j
+@CrossOrigin
 @RequestMapping("/tarifas/")
 public class TarifaController {
 

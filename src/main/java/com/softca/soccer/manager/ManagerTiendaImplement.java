@@ -1,5 +1,7 @@
 package com.softca.soccer.manager;
 import com.softca.soccer.dao.TiendaDao;
+import com.softca.soccer.exception.DaoException;
+import com.softca.soccer.exception.ManageException;
 import org.springframework.stereotype.Component;
 import com.softca.soccer.dto.Tiendas;
 import java.util.List;
@@ -17,29 +19,60 @@ public class ManagerTiendaImplement implements ManagerTienda{
     }
 
 
-    public void crear(Tiendas tienda) throws Exception {
+    public void crear(Tiendas tienda) throws ManageException {
+        try{
+            Tiendas tiendaDato = tiendasDao.selectById(tienda);
 
-        Tiendas tiendaDato = tiendasDao.selectById(tienda);
+                if(tiendaDato==null){
+                    tiendasDao.insert(tienda);
+                }else{
+                    tiendasDao.update(tienda);
+                }
+        }catch (DaoException ex){
+            throw new ManageException(ex.getMessage());
 
-        if(tiendaDato==null){
-            tiendasDao.insert(tienda);
-        }else{
-            tiendasDao.update(tienda);
+        }catch (Exception ex){
+            throw new ManageException(ex.getMessage());
         }
     }
 
-    public Tiendas selectById(Tiendas tienda) throws Exception{
-        Tiendas tiendaDato = tiendasDao.selectById(tienda);
+    public Tiendas selectById(Tiendas tienda) throws ManageException{
+        Tiendas tiendaDato = null;
+
+        try{
+            tiendaDato = tiendasDao.selectById(tienda);
+
+        }catch (DaoException ex){
+            throw new ManageException(ex.getMessage());
+
+        }catch (Exception ex){
+            throw new ManageException(ex.getMessage());
+        }
         return tiendaDato;
     }
 
-    public List<Map<String, Object>> selectAll() throws Exception{
-        return this.tiendasDao.selectAll();
+    public List<Map<String, Object>> selectAll() throws ManageException{
+        try{
+            return this.tiendasDao.selectAll();
+        }catch (DaoException ex){
+            throw new ManageException(ex.getMessage());
+
+        }catch (Exception ex){
+            throw new ManageException(ex.getMessage());
+        }
+
     }
 
-    public  void  delete(Tiendas tiendas ) throws Exception{
-        if(tiendas.getId()!=null){
-            tiendasDao.delete(tiendas);
+    public  void  delete(Tiendas tiendas ) throws ManageException {
+        try{
+            if(tiendas.getId()!=null){
+                tiendasDao.delete(tiendas);
+            }
+        }catch (DaoException ex){
+            throw new ManageException(ex.getMessage());
+
+        }catch (Exception ex){
+            throw new ManageException(ex.getMessage());
         }
 
 

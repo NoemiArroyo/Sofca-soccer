@@ -30,6 +30,30 @@
 		<java.version>17</java.version>
 	</properties>
 	<dependencies>
+		<!-- JUnit Jupiter API y motor de ejecución -->
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter</artifactId>
+			<version>5.10.3</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- Opcional: JUnit Jupiter Engine -->
+		<!-- Necesario si deseas usar el motor de JUnit 5 para ejecutar pruebas -->
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-engine</artifactId>
+			<version>5.10.3</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- JUnit Jupiter API -->
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-api</artifactId>
+			<version>5.10.3</version>
+			<scope>test</scope>
+		</dependency>
 
 		<dependency>
 			<groupId>org.springdoc</groupId>
@@ -63,6 +87,14 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.mockito/mockito-all -->
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-all</artifactId>
+			<version>2.0.2-beta</version>
+			<scope>test</scope>
+		</dependency>
+
 	</dependencies>
 
 	<build>

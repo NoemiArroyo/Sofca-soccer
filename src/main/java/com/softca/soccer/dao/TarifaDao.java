@@ -2,8 +2,6 @@ package com.softca.soccer.dao;
 
 import com.softca.soccer.dto.Tarifa;
 import com.softca.soccer.exception.DaoException;
-
-
 import java.util.List;
 import java.util.Map;
 

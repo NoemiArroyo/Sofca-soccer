@@ -1,15 +1,18 @@
 package com.softca.soccer.business;
 import com.softca.soccer.dto.Tarifa;
 import com.softca.soccer.dto.Tiendas;
+import com.softca.soccer.exception.BusinessException;
+import com.softca.soccer.exception.ManageException;
 import com.softca.soccer.manager.ManagerTienda;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
 
 @Component
-@Transactional
+
 public class BusinessTiendaImplement implements  BusinessTienda{
 
     private ManagerTienda managerTienda;
@@ -21,28 +24,54 @@ public class BusinessTiendaImplement implements  BusinessTienda{
     }
 
 
-    public void registrar(Tiendas tiendas) throws Exception {
-        managerTienda.crear(tiendas);
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = BusinessException.class)
+    public void registrar(Tiendas tiendas) throws BusinessException {
+        try {
+            managerTienda.crear(tiendas);
+        } catch (ManageException ex) {
+            throw new BusinessException(ex.getMessage());
+        } catch (Exception ex) {
+
+        }
     }
 
-
-
-
-    public Tiendas selectById(Tiendas tiendas ) throws Exception {
+    @Transactional(readOnly = true)
+    public Tiendas selectById(Tiendas tiendas ) throws BusinessException {
         Tiendas tnddata =null;
-        tnddata= managerTienda.selectById(tiendas);
+        try{
+            tnddata= this.managerTienda.selectById(tiendas);
+
+        }catch(ManageException ex){
+            throw new BusinessException(ex.getMessage());
+        }catch (Exception ex){
+            throw new BusinessException(ex.getMessage());
+        }
         return tnddata;
     }
 
-    public List<Map<String, Object>> selectAll() throws Exception{
-        return this.managerTienda.selectAll();
+    @Transactional(readOnly = true)
+    public List<Map<String, Object>> selectAll() throws BusinessException{
+
+        try{
+            return this.managerTienda.selectAll();
+        }catch(ManageException ex){
+            throw new BusinessException(ex.getMessage());
+        }catch (Exception ex){
+            throw new BusinessException(ex.getMessage());
+        }
 
     }
 
 
-
-    public void delete(Tiendas tiendas ) throws Exception{
-        this.managerTienda.delete(tiendas);
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = BusinessException.class)
+    public void delete(Tiendas tiendas ) throws BusinessException{
+        try{
+            this.managerTienda.delete(tiendas);
+        }catch(ManageException ex){
+            throw new BusinessException(ex.getMessage());
+        }catch (Exception ex){
+            throw new BusinessException(ex.getMessage());
+        }
 
     }
 
